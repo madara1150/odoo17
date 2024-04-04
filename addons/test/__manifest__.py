@@ -1,5 +1,5 @@
 {
-    'name': 'MyTestModule',
+    'name': 'TestFrist',
     'version': '1.0.0',
     'summary': 'มาเรียนกัน',
     'sequence': 5,
@@ -9,6 +9,7 @@
     'author' : 'Madara',
     'depends': ['base','project'],
     'data': [
+        "views/test_view.xml"
     ],
     'application': True,
 }
