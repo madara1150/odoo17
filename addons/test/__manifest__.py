@@ -9,7 +9,6 @@
     'author' : 'Madara',
     'depends': ['base','project'],
     'data': [
-        "views/test_view.xml"
     ],
     'application': True,
 }

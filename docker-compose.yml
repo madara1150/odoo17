@@ -1,19 +1,20 @@
 version: '2'
 services:
+  # Existing services
   db:
     image: postgres:16
-    user: root
+    user: root  # Consider using a non-root user for security
     environment:
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo17@2023
       - POSTGRES_DB=postgres
     restart: always             # run as a service
     volumes:
-        - ./postgresql:/var/lib/postgresql/data
+      - ./postgresql:/var/lib/postgresql/data
 
   odoo17:
     image: odoo:17
-    user: root
+    user: root  # Consider using a non-root user for security
     depends_on:
       - db
     ports:
@@ -32,4 +33,17 @@ services:
       - ./addons:/mnt/extra-addons
       - ./etc:/etc/odoo
     restart: always             # run as a service
-    
+
+  pgadmin:
+    image: elestio/pgadmin
+    ports:
+      - "5050:80"  # Map pgAdmin4 port to container port
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=password  # Change this to a strong password
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin  # Persistent storage for pgAdmin4 data
+
+# New volume for pgAdmin4 data
+volumes:
+  pgadmin-data: {}
