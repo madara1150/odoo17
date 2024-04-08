@@ -7,7 +7,7 @@
     'website': 'http://www.google.com',
     'category': 'Test',
     'author' : 'Madara',
-    'depends': ['base','project'],
+    'depends': ['base'],
     'data': [
     ],
     'application': True,

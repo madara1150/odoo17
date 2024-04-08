@@ -11,6 +11,8 @@ services:
     restart: always             # run as a service
     volumes:
       - ./postgresql:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
   odoo17:
     image: odoo:17
