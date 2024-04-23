@@ -4,7 +4,7 @@ from odoo.exceptions import ValidationError
 class Property(models.Model):
     _name = 'property'
 
-    name = fields.Char(required=1)
+    name = fields.Char(required=1, default='New')
     description = fields.Text()
     postcode = fields.Char(required=1)
     date_availability = fields.Date()

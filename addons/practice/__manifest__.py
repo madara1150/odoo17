@@ -1,5 +1,5 @@
 {
-    'name': 'TestFrist',
+    'name': 'Practice',
     'version': '1.0.0',
     'summary': 'มาเรียนกัน',
     'sequence': 5,
