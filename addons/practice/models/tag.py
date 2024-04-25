@@ -7,5 +7,4 @@ class Tag(models.Model):
     name = fields.Char(required=1)
 
 
-
     
