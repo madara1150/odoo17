@@ -6,6 +6,7 @@
             <tree>
                 <field name="name"/>
                 <field name="postcode"/>
+                <field name="owner_id"/>
                 <field name="date_availability"/>
                 <field name="selling_price"/>
                 <field name="garden"/>
@@ -40,12 +41,14 @@
                             <field name="facades"/>
                         </group>
                         <group string="Additional Info.">
+                            <field name="owner_id"/>
                             <field name="garden_area"/>
                             <field name="bedrooms"/>
                             <field name="garden"/>
                             <field name="garden_area"/>
                             <field name="garage"/>
                             <field name="garden_orientation"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
                         </group>
                         <group>
                             <field name="description" required="1" />

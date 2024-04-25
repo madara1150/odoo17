@@ -22,6 +22,9 @@ class Property(models.Model):
         ('east','East'),
         ('west', 'West')
         ],default='north')
+    owner_id = fields.Many2one('owner')
+    tag_ids = fields.Many2many('tag')
+
     
     _sql_constraints = [
         ('unique_name', 'unique("name")', 'This name is exist!')
@@ -34,24 +37,24 @@ class Property(models.Model):
                 raise ValidationError('Please add valid number of bedrooms!')
 
     #CRUD OPERATION
-    @api.model_create_multi
-    def create(self, vals):
-        res = super(Property, self).create(vals)
-        print("inside create method")
-        return res
+    # @api.model_create_multi
+    # def create(self, vals):
+    #     res = super(Property, self).create(vals)
+    #     print("inside create method")
+    #     return res
     
-    @api.model
-    def _search(self,domain, offset=0, limit=None, order=None, access_rights_uid=None):
-        res = super(Property, self)._search(domain, offset=0, limit=None, order=None, access_rights_uid=None)
-        print("inside search method")
-        return res
+    # @api.model
+    # def _search(self,domain, offset=0, limit=None, order=None, access_rights_uid=None):
+    #     res = super(Property, self)._search(domain, offset=0, limit=None, order=None, access_rights_uid=None)
+    #     print("inside search method")
+    #     return res
     
-    def write(self, vals):
-        res = super(Property, self).write(vals)
-        print("inside write method")
-        return res
+    # def write(self, vals):
+    #     res = super(Property, self).write(vals)
+    #     print("inside write method")
+    #     return res
     
-    def unlink(self):
-        res = super(Property, self).unlink()
-        print("inside unlink method")
-        return res
+    # def unlink(self):
+    #     res = super(Property, self).unlink()
+    #     print("inside unlink method")
+    #     return res
