@@ -11,5 +11,8 @@
     'data': [
         'views/base_menu.xml','views/property_view.xml','security/ir.model.access.csv','views/owner_view.xml','views/tag_view.xml'
     ],
+    'assets': {
+        'web.assets_backend': ['practice/static/src/css/property.css']
+    },
     'application': True,
 }
