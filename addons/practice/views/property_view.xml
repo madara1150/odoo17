@@ -42,6 +42,7 @@
                             <field name="postcode"/>
                             <field name="expected_price"/>
                             <field name="selling_price"/>
+                            <field name="diff"/>
                             <field name="bedrooms"/>
                             <field name="living_area"/>
                             <field name="facades"/>
@@ -81,12 +82,14 @@
         </field>
     </record>
     
+    
     <record id="property_action" model="ir.actions.act_window">
         <field name="name">Property</field>
         <field name="res_model">property</field>
         <field name="view_mode">tree,form,kanban</field>
     </record>
     
+    <!-- สร้างเมนู  -->
     <menuitem 
         id="property_menu_item"
         name="Properties"
