@@ -40,8 +40,24 @@ class Property(models.Model):
         for rec in self:
             if rec.bedrooms == 0:
                 raise ValidationError('Please add valid number of bedrooms!')
+            
+    def action_draft(self):
+        for rec in self:
+            print("enside draft action")
+            rec.state = 'draft'
+            # rec.write({
+            #     'state' : 'draft'
+            # })
 
-    #CRUD OPERATION
+    def action_sold(self):
+        for rec in self:
+            print("enside sold action")
+            rec.state = 'sold'
+            rec.write({
+                'state' : 'sold'
+            })
+
+
     # @api.model_create_multi
     # def create(self, vals):
     #     res = super(Property, self).create(vals)
