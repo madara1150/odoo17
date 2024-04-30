@@ -4,12 +4,16 @@ from odoo.exceptions import ValidationError
 class Property(models.Model):
     # ชื่อ table
     _name = 'property'
+    # chat จะ track created เป็น description ==> Property Record created.
+    _description = 'Property Record'
+    _inherit = ['mail.thread','mail.activity.mixin']
 
     # ชื่อ column
     name = fields.Char(required=1, default='New', size=12)
-    description = fields.Text()
+    # tracking เหมือนใช้ร่วมกับแชท ทำให้เวลากระทำอะไรจะแสดง chat ออกมา
+    description = fields.Text(tracking=1)
     postcode = fields.Char(required=1)
-    date_availability = fields.Date()
+    date_availability = fields.Date(tracking=1)
     # digits ไว้ทำเป็นทศนิยม กรณีนี้คือ ทศนิยม 5 หลัก 0.00000
     expected_price = fields.Float(digits=(0,5))
     # ทำ compute field และ store ไว้ทำเมื่อ ต้องการมี field diff ปกติใส่ compute จะไม่มี fields นี้ใน database

@@ -64,6 +64,11 @@
                         </group>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"></field>
+                    <field name="activity_ids"></field>
+                    <field name="message_ids"></field>
+                </div>
             </form>
         </field>
     </record>
