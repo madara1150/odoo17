@@ -49,6 +49,8 @@
                         </group>
                         <group string="Additional Info.">
                             <field name="owner_id"/>
+                            <field name="owner_address"/>
+                            <field name="owner_phone"/>
                             <field name="garden_area"/>
                             <field name="bedrooms"/>
                             <field name="garden"/>

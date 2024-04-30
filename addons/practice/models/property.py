@@ -33,6 +33,10 @@ class Property(models.Model):
     owner_id = fields.Many2one('owner')
     tag_ids = fields.Many2many('tag')
 
+    #ทำ relation ระหว่าง field ข้าม table
+    owner_address = fields.Char(related='owner_id.address', readonly=0, store=1)
+    owner_phone = fields.Char(related='owner_id.phone', readonly=0)
+
     # สร้าง state ทั้งหมดขึ้นมา
     state = fields.Selection([
         ('draft','Draft'),
