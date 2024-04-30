@@ -54,6 +54,7 @@ class Property(models.Model):
     ]
 
     line_ids = fields.One2many('property.line','property_id')
+    active = fields.Boolean(default=True)
 
     # depends จะเป็นให้มันขึ้นอยู่กับอะไร เมิ่อขึ้นอยู่กับอะไรแล้ว field นี้จะเป็นแบบเรียลไทม์เมื่อค่า field นั้นเปลี่ยนก็จะ compute ทันที
     @api.depends('expected_price','selling_price','owner_id.phone')

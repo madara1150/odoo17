@@ -15,6 +15,7 @@
                 <field name="garden_area"/>
                 <field name="bedrooms" optional="1"/>
                 <field name="garage" optional="1"/>
+                <field name="active" optional="1"/>
             </tree>
         </field>
     </record>
@@ -57,6 +58,7 @@
                             <field name="garden_area"/>
                             <field name="garage"/>
                             <field name="garden_orientation"/>
+                            <field name="active"/>
                             <field name="tag_ids" widget="many2many_tags"/>
                         </group>
                         <group>
@@ -75,7 +77,7 @@
                             </page>
                         </notebook>
 
-                        
+
                     </group>
                 </sheet>
                 <div class="oe_chatter">
