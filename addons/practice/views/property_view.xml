@@ -62,6 +62,20 @@
                         <group>
                             <field name="description" required="1" />
                         </group>
+
+                        <!-- แทบข้างล่าง -->
+                        <notebook>
+                            <page string="bedrooms">
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="description"></field>
+                                        <field name="area"></field>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+
+                        
                     </group>
                 </sheet>
                 <div class="oe_chatter">

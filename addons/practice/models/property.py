@@ -53,6 +53,8 @@ class Property(models.Model):
         ('unique_name', 'unique("name")', 'This name is exist!')
     ]
 
+    line_ids = fields.One2many('property.line','property_id')
+
     # depends จะเป็นให้มันขึ้นอยู่กับอะไร เมิ่อขึ้นอยู่กับอะไรแล้ว field นี้จะเป็นแบบเรียลไทม์เมื่อค่า field นั้นเปลี่ยนก็จะ compute ทันที
     @api.depends('expected_price','selling_price','owner_id.phone')
     # สร้าง compute เพื่อบอกว่า column นั้นจะทำอะไร
@@ -122,3 +124,11 @@ class Property(models.Model):
     #     res = super(Property, self).unlink()
     #     print("inside unlink method")
     #     return res
+
+
+class PropertyLine(models.Model):
+    _name = 'property.line'
+
+    property_id = fields.Many2one('property')
+    area = fields.Float()
+    description = fields.Char()
