@@ -46,6 +46,7 @@ class Property(models.Model):
         ('draft','Draft'),
         ('pending','Pending'),
         ('sold','Sold'),
+        ('closed','Closed'),
     ], default='draft')
 
     # สร้าง contraint ไม่ให้ชื่อซ้ำกัน
@@ -99,6 +100,10 @@ class Property(models.Model):
             rec.write({
                 'state' : 'sold'
             })
+
+    def action_closed(self):
+        for rec in self:
+            rec.state = 'closed'
 
     # เมื่อสร้าง record จะแสดงปริ้น
     # @api.model_create_multi
