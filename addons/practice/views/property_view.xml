@@ -3,9 +3,11 @@
         <field name="name">property tree</field>
         <field name="model">property</field>
         <field name="arch" type="xml">
-            <tree class="header_custom">
+            <!-- ถ้า rate อักษรจะสีแดง  -->
+            <tree class="header_custom" decoration-danger="(is_late)">
                 <field name="name"/>
                 <field name="postcode"/>
+                <field name="is_late" invisible="1"/>
                 <field name="owner_id"/>
                 <field name="date_availability"/>
                 <field name="selling_price"/>
@@ -41,6 +43,9 @@
                     <group>
                         <group string="General Info.">
                             <field name="date_availability" required="1"/>
+                            <field name="expected_selling_date"/>
+                            <!-- เช็คตามเวลาที่กรอก expected_priced_date -->
+                            <field name="is_late" invisible="1"></field>
                             <field name="postcode"/>
                             <field name="expected_price"/>
                             <field name="selling_price"/>
@@ -119,7 +124,24 @@
         <field name="model_id" ref="model_property"></field>
         <field name="binding_model_id" ref="model_property"></field>
         <field name="state">code</field>
+        <!-- ชื่อฟังชั่นใน property.py -->
         <field name="code">action = records.action_closed()</field>
+    </record>
+
+    <!-- ตั้งเวลา auto ไว้เพื่อทำ exec บางอย่าง -->
+    <record id="check_selling_date_cron" model="ir.cron">
+        <field name="name">Property: Check selling date</field>
+        <field name="model_id" ref="model_property"></field>
+        <field name="state">code</field>
+        <!-- ชื่อฟังชั่นใน property.py -->
+        <field name="code">model.check_expected_selling_date()</field>
+        <!-- ทำทุก 1 วัน -->
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <!-- จำนวนครั้งที่ทำ -->
+        <field name="numbercall">-1</field>
+        <!-- active ไหม -->
+        <field name="active">True</field>
     </record>
     
     <!-- สร้างเมนู  -->

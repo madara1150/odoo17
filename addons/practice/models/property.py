@@ -14,6 +14,8 @@ class Property(models.Model):
     description = fields.Text(tracking=1)
     postcode = fields.Char(required=1)
     date_availability = fields.Date(tracking=1)
+    expected_selling_date = fields.Date(tracking=1)
+    is_late = fields.Boolean()
     # digits ไว้ทำเป็นทศนิยม กรณีนี้คือ ทศนิยม 5 หลัก 0.00000
     expected_price = fields.Float(digits=(0,5))
     # ทำ compute field และ store ไว้ทำเมื่อ ต้องการมี field diff ปกติใส่ compute จะไม่มี fields นี้ใน database
@@ -104,6 +106,17 @@ class Property(models.Model):
     def action_closed(self):
         for rec in self:
             rec.state = 'closed'
+
+    # สร้าง method ไว้เป็น scripts  ไว้สามารถตั้งให้มัน exec ตอนไหนก็ได้ตามที่เราสั่ง หรือเรียกว่า cron (automated actions)
+    def check_expected_selling_date(self):
+        property_ids = self.search([])
+        for rec in property_ids:
+            # check ว่ามี date ไหม ถ้ามีให้เช็คว่ามันเกินวันหมดอายุไหม
+            if rec.expected_selling_date and rec.expected_selling_date < fields.date.today():
+                rec.is_late = True
+            else:
+                rec.is_late = False
+
 
     # เมื่อสร้าง record จะแสดงปริ้น
     # @api.model_create_multi
