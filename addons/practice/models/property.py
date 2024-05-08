@@ -8,6 +8,7 @@ class Property(models.Model):
     _description = 'Property Record'
     _inherit = ['mail.thread','mail.activity.mixin']
 
+    ref = fields.Char(default='New', readonly=1)
     # ชื่อ column
     name = fields.Char(required=1, default='New', size=12)
     # tracking เหมือนใช้ร่วมกับแชท ทำให้เวลากระทำอะไรจะแสดง chat ออกมา
@@ -136,6 +137,13 @@ class Property(models.Model):
         # ดู owner ว่ามีกี่ตัว
         print(self.env['owner'].search([]))
 
+    # ทำ sequence ว่า อยากให้ชื่อ เป็น pattern เดียวกัน เช่น PRT00001
+    @api.model
+    def create(self, vals):
+        res = super(Property, self).create(vals)
+        if res.ref == 'New':
+            res.ref = self.env['ir.sequence'].next_by_code('Property_seq')
+        return res
 
     # เมื่อสร้าง record จะแสดงปริ้น
     # @api.model_create_multi
