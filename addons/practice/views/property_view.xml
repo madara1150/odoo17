@@ -29,6 +29,7 @@
             <form>
                 <sheet>
                     <header>
+                        <button name="action" type="object" class="btn-primary" string="Action" />
                         <button name="action_draft" type="object" class="btn-primary" string="Set to Draft" invisible="state == 'draft'" />
                         <button name="action_sold" type="object" class="btn-secondary" string="Set to sold" invisible="state == 'sold'" />
                         <!-- statusbar_visible="draft, sold" ตั้งว่าให้แสดงแค่ darft กับ sold -->

@@ -117,6 +117,25 @@ class Property(models.Model):
             else:
                 rec.is_late = False
 
+    def action(self):
+        # สามารถหา name, id, login ได้ เช่น self.env.user.login คือ เข้ามาโดย สถานะ admin
+        print(self.env.user.name)
+        print(self.env.uid)
+        print(self.env.company)
+        print(self.env.context)
+        
+        # เช็ค sql db cursor
+        print(self.env.cr)
+
+        #สร้าง owner มาใหม่
+        print(self.env['owner'].create({
+            'name': 'name one',
+            'phone' : '0100004934344'
+        }))
+
+        # ดู owner ว่ามีกี่ตัว
+        print(self.env['owner'].search([]))
+
 
     # เมื่อสร้าง record จะแสดงปริ้น
     # @api.model_create_multi
