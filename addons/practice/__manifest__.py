@@ -16,7 +16,9 @@
         'views/sale_order_view.xml',
         'views/building_view.xml',
         'reports/property_report.xml',
-        'data/sequence.xml'
+        'data/sequence.xml',
+        'views/property_history_view.xml',
+        
     ],
     'assets': {
         'web.assets_backend': ['practice/static/src/css/property.css']

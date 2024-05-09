@@ -89,23 +89,29 @@ class Property(models.Model):
     # สร้าง method
     def action_draft(self):
         for rec in self:
-            print("enside draft action")
+            rec.create_history_record(rec.state, 'draft')
             rec.state = 'draft'
-            # rec.write({
-            #     'state' : 'draft'
-            # })
 
     # สร้าง method
     def action_sold(self):
         for rec in self:
-            print("enside sold action")
+            rec.create_history_record(rec.state, 'sold')
             rec.state = 'sold'
             rec.write({
                 'state' : 'sold'
             })
 
+    def action_pending(self):
+        for rec in self:
+            rec.create_history_record(rec.state, 'pending')
+            rec.state = 'pending'
+            rec.write({
+                'state' : 'pending'
+            })
+
     def action_closed(self):
         for rec in self:
+            rec.create_history_record(rec.state, 'closed')
             rec.state = 'closed'
 
     # สร้าง method ไว้เป็น scripts  ไว้สามารถตั้งให้มัน exec ตอนไหนก็ได้ตามที่เราสั่ง หรือเรียกว่า cron (automated actions)
@@ -144,6 +150,16 @@ class Property(models.Model):
         if res.ref == 'New':
             res.ref = self.env['ir.sequence'].next_by_code('Property_seq')
         return res
+    
+    def create_history_record(self, old_state, new_state):
+        for rec in self:
+            rec.env['property.history'].create({
+                'user_id': rec.env.uid,
+                'property_id': rec.id,
+                'old_state': old_state,
+                'new_state' : new_state
+            })
+
 
     # เมื่อสร้าง record จะแสดงปริ้น
     # @api.model_create_multi
