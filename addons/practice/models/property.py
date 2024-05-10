@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+from datetime import timedelta
 
 class Property(models.Model):
     # ชื่อ table
@@ -43,6 +44,8 @@ class Property(models.Model):
     #ทำ relation ระหว่าง field ข้าม table
     owner_address = fields.Char(related='owner_id.address', readonly=0, store=1)
     owner_phone = fields.Char(related='owner_id.phone', readonly=0)
+    create_time = fields.Datetime(default=fields.Datetime.now())
+    next_time = fields.Datetime(compute='_compute_next_time')
 
     # สร้าง state ทั้งหมดขึ้นมา
     state = fields.Selection([
@@ -59,6 +62,15 @@ class Property(models.Model):
 
     line_ids = fields.One2many('property.line','property_id')
     active = fields.Boolean(default=True)
+
+    @api.depends('create_time')
+    def _compute_next_time(self):
+        for rec in self:
+            if rec.create_time:
+                rec.next_time = rec.create_time + timedelta(hours=6)
+            else:
+                rec.next_time = False
+
 
     # depends จะเป็นให้มันขึ้นอยู่กับอะไร เมิ่อขึ้นอยู่กับอะไรแล้ว field นี้จะเป็นแบบเรียลไทม์เมื่อค่า field นั้นเปลี่ยนก็จะ compute ทันที
     @api.depends('expected_price','selling_price','owner_id.phone')
@@ -151,7 +163,7 @@ class Property(models.Model):
             res.ref = self.env['ir.sequence'].next_by_code('Property_seq')
         return res
     
-    def create_history_record(self, old_state, new_state, reason):
+    def create_history_record(self, old_state, new_state, reason=""):
         for rec in self:
             rec.env['property.history'].create({
                 'user_id': rec.env.uid,
@@ -159,6 +171,7 @@ class Property(models.Model):
                 'old_state': old_state,
                 'new_state' : new_state,
                 'reason': reason or "",
+                'line_ids': [(0,0,{'description': line.description, 'area': line.area})for line in rec.line_ids],
             })
 
     def action_open_change_state_wizard(self):

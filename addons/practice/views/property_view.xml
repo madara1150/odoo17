@@ -49,6 +49,8 @@
                     </div>
                     <group>
                         <group string="General Info.">
+                            <field name="create_time" readonly="1" />
+                            <field name="next_time" />
                             <field name="date_availability" required="1" readonly="state == 'closed'"/>
                             <field name="expected_selling_date" readonly="state == 'closed'"/>
                             <!-- เช็คตามเวลาที่กรอก expected_priced_date -->
