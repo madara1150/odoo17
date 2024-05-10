@@ -151,16 +151,22 @@ class Property(models.Model):
             res.ref = self.env['ir.sequence'].next_by_code('Property_seq')
         return res
     
-    def create_history_record(self, old_state, new_state):
+    def create_history_record(self, old_state, new_state, reason):
         for rec in self:
             rec.env['property.history'].create({
                 'user_id': rec.env.uid,
                 'property_id': rec.id,
                 'old_state': old_state,
-                'new_state' : new_state
+                'new_state' : new_state,
+                'reason': reason or "",
             })
 
-
+    def action_open_change_state_wizard(self):
+        action = self.env['ir.actions.actions']._for_xml_id('practice.change_state_wizard_action')
+        action['context'] = {'default_property_id' : self.id}
+        return action
+    
+    
     # เมื่อสร้าง record จะแสดงปริ้น
     # @api.model_create_multi
     # def create(self, vals):
