@@ -152,8 +152,8 @@ class Property(models.Model):
             'phone' : '0100004934344'
         }))
 
-        # ดู owner ว่ามีกี่ตัว
-        print(self.env['owner'].search([]))
+        # ดู owner ว่ามีกี่ตัว สามารถใส่ เครื่องหมายได้นำหน้า และ default มันคือ หรือ (! & |)
+        print(self.env['property'].search(['&', ('name', '!=', 'Property1'),('postcode', '=', '12345')]))
 
     # ทำ sequence ว่า อยากให้ชื่อ เป็น pattern เดียวกัน เช่น PRT00001
     @api.model
