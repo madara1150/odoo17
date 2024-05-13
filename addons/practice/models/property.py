@@ -11,7 +11,7 @@ class Property(models.Model):
 
     ref = fields.Char(default='New', readonly=1)
     # ชื่อ column
-    name = fields.Char(required=1, default='New', size=12)
+    name = fields.Char(required=1, default='New', size=50)
     # tracking เหมือนใช้ร่วมกับแชท ทำให้เวลากระทำอะไรจะแสดง chat ออกมา
     description = fields.Text(tracking=1)
     postcode = fields.Char(required=1)
