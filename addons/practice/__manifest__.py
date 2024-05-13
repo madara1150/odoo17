@@ -12,6 +12,7 @@
         'views/base_menu.xml',
         'views/property_view.xml',
         'security/ir.model.access.csv',
+        'security/security.xml',
         'views/owner_view.xml','views/tag_view.xml',
         'views/sale_order_view.xml',
         'views/building_view.xml',
