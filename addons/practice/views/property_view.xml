@@ -27,10 +27,15 @@
         <field name="model">property</field>
         <field name="arch" type="xml">
             <form>
-            <!-- ทำป้ายกำกับว่า Archived หรือ Sold อยู่ -->
-            <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active" />
-            <widget name="web_ribbon" title="Sold" bg_color="text-bg-success" invisible="state != 'sold'" />
-                <sheet>
+                <sheet> 
+                        <!-- จะเป็น btn อยู่ข้างบนสามารถใส่ไอคอนได้ เมื่อกดจะแสดงข้อมูล owner ออกมา -->
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open_related_owner" type="object" invisible="not owner_id" icon="fa-user" string="Owner">
+                            </button>
+                        </div>
+                        <!-- ทำป้ายกำกับว่า Archived หรือ Sold อยู่ -->
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active" />
+                        <widget name="web_ribbon" title="Sold" bg_color="text-bg-success" invisible="state != 'sold'" />
                     <header>
                         <button name="action" type="object" class="btn-primary" string="Action" />
                         <button name="action_draft" type="object" class="btn-primary" string="Set to Draft" invisible="state in ('draft', 'closed')" />

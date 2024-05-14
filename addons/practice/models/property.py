@@ -180,6 +180,14 @@ class Property(models.Model):
         action['context'] = {'default_property_id' : self.id}
         return action
     
+    # กดแล้วจะเปิดหน้าแสดงข้อมูล form owner ขึ้นมา
+    def action_open_related_owner(self):
+        action = self.env['ir.actions.actions']._for_xml_id('practice.owner_action')
+        view_id = self.env.ref('practice.owner_view_form').id
+        action['res_id'] = self.owner_id.id
+        action['views'] = [[view_id, 'form']]
+        return action
+    
     
     # เมื่อสร้าง record จะแสดงปริ้น
     # @api.model_create_multi
