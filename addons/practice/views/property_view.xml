@@ -27,6 +27,8 @@
         <field name="model">property</field>
         <field name="arch" type="xml">
             <form>
+            <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active" />
+            <widget name="web_ribbon" title="Sold" bg_color="text-bg-success" invisible="state != 'sold'" />
                 <sheet>
                     <header>
                         <button name="action" type="object" class="btn-primary" string="Action" />
