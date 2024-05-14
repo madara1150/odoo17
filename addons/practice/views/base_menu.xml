@@ -9,6 +9,7 @@
         name="Properties"
         parent="real_estate_root_menu"
     />
+    <!-- กำหนด group เข้าถึงเมนูนั้นได้ -->
     <menuitem 
         id="configration_menu"
         name="Configration"

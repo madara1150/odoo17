@@ -26,6 +26,7 @@ class Property(models.Model):
     bedrooms = fields.Integer()
     living_area = fields.Integer()
     facades = fields.Integer()
+    # สามารถกำหนดสิทธิให้คนเข้าได้ถึง field นี้ได้
     garage = fields.Boolean(groups="practice.property_manager_group")
     garden = fields.Boolean()
     garden_area = fields.Integer()
