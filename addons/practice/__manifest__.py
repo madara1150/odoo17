@@ -23,7 +23,8 @@
         
     ],
     'assets': {
-        'web.assets_backend': ['practice/static/src/css/property.css']
+        'web.assets_backend': ['practice/static/src/css/property.css'],
+        'web.report_assets_common': ['practice/static/src/css/font.css']
     },
     'application': True,
 }
