@@ -1,0 +1,172 @@
+<odoo>
+    <record id="property_view_tree" model="ir.ui.view">
+        <field name="name">property tree</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <!-- ถ้า rate อักษรจะสีแดง  -->
+            <tree class="header_custom" decoration-danger="(is_late)">
+                <field name="name"/>
+                <field name="postcode"/>
+                <field name="is_late" invisible="1"/>
+                <field name="owner_id"/>
+                <field name="date_availability"/>
+                <field name="selling_price"/>
+                <field name="garden"/>
+                <field name="facades"/>
+                <field name="state"/>
+                <field name="garden_area"/>
+                <field name="bedrooms" optional="1"/>
+                <field name="garage" optional="1"/>
+                <field name="active" optional="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="property_view_form" model="ir.ui.view">
+        <field name="name">property form</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet> 
+                        <!-- จะเป็น btn อยู่ข้างบนสามารถใส่ไอคอนได้ เมื่อกดจะแสดงข้อมูล owner ออกมา -->
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open_related_owner" type="object" invisible="not owner_id" icon="fa-user" string="Owner">
+                            </button>
+                        </div>
+                        <!-- ทำป้ายกำกับว่า Archived หรือ Sold อยู่ -->
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active" />
+                        <widget name="web_ribbon" title="Sold" bg_color="text-bg-success" invisible="state != 'sold'" />
+                    <header>
+                        <button name="action" type="object" class="btn-primary" string="Action" />
+                        <button name="action_draft" type="object" class="btn-primary" string="Set to Draft" invisible="state in ('draft', 'closed')" />
+                        <button name="action_pending" type="object" class="btn-secondary" string="Pending" invisible="state != 'draft'" />
+                        <button name="action_sold" type="object" class="btn-success" string="Set to sold" invisible="state != 'pending'" />
+                        <!-- statusbar_visible="draft, sold" ตั้งว่าให้แสดงแค่ darft กับ sold -->
+                        <field name="state" widget="statusbar" options="{'clickable' : 1}" />
+                    </header>
+                    <div class="oe_title">
+                        <label for="ref" />
+                        <h1>
+                            <!-- ทำ readonly แบบมีเงื่อนไขได้ -->
+                            <field name="ref" readonly="state != 'draft'" />
+                        </h1>
+                        
+                        <label for="name" />
+                        <h3>
+                            <field name="name" readonly="state != 'draft'" />
+                        </h3>
+                    </div>
+                    <group>
+                        <group string="General Info.">
+                            <field name="create_time" readonly="1" />
+                            <field name="next_time" />
+                            <field name="date_availability" required="1" readonly="state == 'closed'"/>
+                            <field name="expected_selling_date" readonly="state == 'closed'"/>
+                            <!-- เช็คตามเวลาที่กรอก expected_priced_date -->
+                            <field name="is_late" invisible="1" readonly="state == 'closed'"></field>
+                            <field name="postcode" readonly="state == 'closed'"/>
+                            <field name="expected_price" readonly="state == 'closed'"/>
+                            <field name="selling_price" readonly="state == 'closed'"/>
+                            <field name="diff" readonly="state == 'closed'"/>
+                            <field name="bedrooms" readonly="state == 'closed'"/>
+                            <field name="living_area" readonly="state == 'closed'"/>
+                            <field name="facades" readonly="state == 'closed'"/>
+                        </group>
+                        <group string="Additional Info.">
+                            <field name="owner_id" readonly="state == 'closed'"/>
+                            <field name="owner_address" readonly="state == 'closed'"/>
+                            <field name="owner_phone" readonly="state == 'closed'"/>
+                            <field name="garden_area" readonly="state == 'closed'"/>
+                            <field name="bedrooms" readonly="state == 'closed'"/>
+                            <field name="garden" readonly="state == 'closed'"/>
+                            <field name="garden_area" readonly="state == 'closed'"/>
+                            <field name="garage" readonly="state == 'closed'"/>
+                            <field name="garden_orientation" readonly="state == 'closed'"/>
+                            <field name="active" readonly="state == 'closed'"/>
+                            <field name="tag_ids" widget="many2many_tags" readonly="state == 'closed'"/>
+                        </group>
+                        <group>
+                            <field name="description" required="1" />
+                        </group>
+
+                        <!-- แทบข้างล่าง -->
+                        <notebook>
+                            <page string="bedrooms">
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="description"></field>
+                                        <field name="area"></field>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+
+
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"></field>
+                    <field name="activity_ids"></field>
+                    <field name="message_ids"></field>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="property_view_search" model="ir.ui.view">
+        <field name="name">property search</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="postcode"/>
+
+                <filter name="is_garden" string="With Garden" domain="[('garden', '=', True)]" />
+                <filter name="is_not_garden" string="Without Garden" domain="[('garden', '=', False)]" />
+                <filter name="is_garage" string="With Garage" domain="[('garage', '=', True)]" />
+                <filter name="group_garden" string="Garden" context="{'group_by': 'garden'}" />
+            </search>
+        </field>
+    </record>
+    
+
+    <record id="property_action" model="ir.actions.act_window">
+        <field name="name">Property</field>
+        <field name="res_model">property</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <!-- server action -->
+    <record id="property_change_state_server_action" model="ir.actions.server">
+        <field name="name">Change State</field>
+        <field name="model_id" ref="model_property"></field>
+        <field name="binding_model_id" ref="model_property"></field>
+        <field name="state">code</field>
+        <!-- ชื่อฟังชั่นใน property.py -->
+        <field name="code">action = records.action_open_change_state_wizard()</field>
+    </record>
+
+    <!-- ตั้งเวลา auto ไว้เพื่อทำ exec บางอย่าง -->
+    <record id="check_selling_date_cron" model="ir.cron">
+        <field name="name">Property: Check selling date</field>
+        <field name="model_id" ref="model_property"></field>
+        <field name="state">code</field>
+        <!-- ชื่อฟังชั่นใน property.py -->
+        <field name="code">model.check_expected_selling_date()</field>
+        <!-- ทำทุก 1 วัน -->
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <!-- จำนวนครั้งที่ทำ -->
+        <field name="numbercall">-1</field>
+        <!-- active ไหม -->
+        <field name="active">True</field>
+    </record>
+    
+    <!-- สร้างเมนู  -->
+    <menuitem 
+        id="property_menu_item"
+        name="Properties"
+        parent="properties_menu"
+        action="property_action"
+    />
+</odoo>
